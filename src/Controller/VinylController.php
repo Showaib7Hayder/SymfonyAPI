@@ -19,27 +19,23 @@ class VinylController extends AbstractController {
     public function info(Request $request) : Response
     {
         $response = new Response();
-//        $response->setContent(json_encode(
-//            [
-//                'title'=>"json Info from server",
-//                'info' => "Hi! , here is the response from symfony serve"
-//            ]
-//        ));
+
 //      $name = $request->request->get('name');
+
         $file = $request->files->get('file');
-//        $dataName = $data['name'] . " from Server";
-        $path = 'C:\xampp\htdocs\symfonyApp\backEndSymfony\src\Entity';
+
+
+        $path = 'C:\xampp\htdocs\symfonyApp\backEndSymfony';
         $file->move($path);
-//        $response->setContent(json_encode($dataName));
 
-
-        $python = <<<PYTHON
-    import pandas as pd
-
-    df = pd.DataFrame({$file})
-    result = df.mean()
-    print(result)
-    PYTHON;
+    // Strting work on python processing
+//        $python = <<<PYTHON
+//    import pandas as pd
+//
+//    df = pd.DataFrame({$file})
+//    result = df.mean()
+//    print(result)
+//    PYTHON;
 
         $response->setContent("File uploaded successfully!");
 
