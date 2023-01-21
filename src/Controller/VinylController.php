@@ -25,22 +25,17 @@ class VinylController extends AbstractController {
         $file = $request->files->get('file');
 
 
-        $path = 'C:\xampp\htdocs\symfonyApp\backEndSymfony';
-        $file->move($path);
+//        $path = '.\backEndSymfony';
+//        $file->move($path);
 
-//     Strting work on python processing
-//        $python = <<<PYTHON
-//    import pandas as pd
-//
-//    data = pd.read_csv({$path})
-//    age = data[['age']]
-//    result = age.mean()
-//    print(result)
-//    PYTHON;
+//     Working on python processing
 
-//        $result = python_eval($python);
 
-        $response->setContent("File uploaded successfully!");
+        $script_path  =realpath(__DIR__ . '/../scripts/pyscript.py');
+        $command = "python  $script_path";
+        exec($command, $output, $return_var);
+
+        $response->setContent(json_encode($output));
 
         // for Json data we set the type of header content like that :
 
