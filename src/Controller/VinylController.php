@@ -28,14 +28,17 @@ class VinylController extends AbstractController {
         $path = 'C:\xampp\htdocs\symfonyApp\backEndSymfony';
         $file->move($path);
 
-    // Strting work on python processing
+//     Strting work on python processing
 //        $python = <<<PYTHON
 //    import pandas as pd
 //
-//    df = pd.DataFrame({$file})
-//    result = df.mean()
+//    data = pd.read_csv({$path})
+//    age = data[['age']]
+//    result = age.mean()
 //    print(result)
 //    PYTHON;
+
+//        $result = python_eval($python);
 
         $response->setContent("File uploaded successfully!");
 
