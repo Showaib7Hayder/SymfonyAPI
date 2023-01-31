@@ -23,19 +23,51 @@ class VinylController extends AbstractController {
 //      $name = $request->request->get('name');
 
         $file = $request->files->get('file');
+        $variables = json_decode($request->request->get('vars'),true);
+        $testName = $request->request->get('test');
 
 
-//        $path = '.\backEndSymfony';
-//        $file->move($path);
+        if ($file->getClientMimeType() !== 'text/csv') {
+        throw new \Exception('Invalid file type');
+        }
+
+
+        $file->move(realpath(__DIR__ . '/../sets/'), $file->getClientOriginalName());
+
 
 //     Working on python processing
 
 
-        $script_path  =realpath(__DIR__ . '/../scripts/pyscript.py');
-        $command = "python  $script_path";
+        $median_path  =realpath(__DIR__ . '/../scripts/median.py');
+        $anova_path  =realpath(__DIR__ . '/../scripts/anova.py');
+        $shapiro_path  =realpath(__DIR__ . '/../scripts/shapiro.py');
+        $spearman_path  =realpath(__DIR__ . '/../scripts/spearman.py');
+
+        $python_script  = $median_path;
+
+        switch ($testName){
+            case "ANOVA" :
+                $python_script = $anova_path;
+                break;
+            case "Median" :
+                $python_script = $median_path;
+                break;
+            case "Spearman" :
+                $python_script = $spearman_path;
+                break;
+            case "Shapiro" :
+                $python_script = $shapiro_path;
+                break;
+            default:
+                $python_script = $anova_path;
+        }
+
+        $vars_string = implode(" ",$variables);
+        $command = "python  $python_script $vars_string";
         exec($command, $output, $return_var);
 
-        $response->setContent(json_encode($output));
+        // $response->setContent(json_encode($output));
+         $response->setContent(json_encode($output));
 
         // for Json data we set the type of header content like that :
 
