@@ -1,22 +1,31 @@
-<?php 
+<?php
 
 namespace App\Controller;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
 
-class VinylController extends AbstractController {
+class FosRestController extends AbstractController
+{
 
-    #[Route('/home')]
-    public function homePage(){
-    die('Here is the home Page !');
+
+
+    /**
+     * @Route("/resthome", name="default")
+     */
+    public function index()
+    {
+        return new Response('Hello World!');
     }
 
-    #[Route('/info')]
-    public function info(Request $request) : Response
+
+    /**
+     * @Route("/api/tests", methods={"POST"})
+     */
+    public function getTests(Request $request) : Response
     {
         $response = new Response();
 
@@ -27,7 +36,7 @@ class VinylController extends AbstractController {
 
 
         if ($file->getClientMimeType() !== 'text/csv') {
-        throw new \Exception('Invalid file type');
+            throw new \Exception('Invalid file type');
         }
 
 
@@ -66,7 +75,7 @@ class VinylController extends AbstractController {
         exec($command, $output, $return_var);
 
         // $response->setContent(json_encode($output));
-         $response->setContent(json_encode($output));
+        $response->setContent(json_encode($output));
 
         // for Json data we set the type of header content like that :
 
@@ -83,5 +92,16 @@ class VinylController extends AbstractController {
 
         return $response;
     }
+
+
+
+//    #[Route('/fos/rest', name: 'app_fos_rest')]
+//    public function index2(): Response
+//    {
+//        return $this->render('fos_rest/index.html.twig', [
+//            'controller_name' => 'FosRestController',
+//        ]);
+//    }
+
 
 }

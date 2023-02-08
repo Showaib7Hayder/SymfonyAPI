@@ -35,6 +35,9 @@
             "./migrations/.gitignore"
         ]
     },
+    "friendsofsymfony/rest-bundle": {
+        "version": "3.5.0"
+    },
     "phpunit/phpunit": {
         "version": "9.5",
         "recipe": {
